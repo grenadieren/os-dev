@@ -1,2 +1,2 @@
-# oss-dev
-a wild attempt to build an os from scratch -- because why not?
+# os-dev
+Building an OS from scratch: an experimental journey into the unknown.
