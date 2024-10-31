@@ -96,27 +96,19 @@ This will generate a binary file named boot.bin. This file contains the machine 
 
 With our bootloader ready, we now need to place it in a disk image that can be used to boot a virtual machine.
 
- 1. Create an Empty Disk Image
-  - Run the following command to create a blank 1.44 MB disk image:
-   - ```dd if=/dev/zero of=boot.img bs=512 count=2880```     
-    - ```if=/dev/zero``` tells ``dd`` to fill the image with zeroes.    
-    - ```of=boot.img```specifies the output file  
-    - ```bs=512``` and ```count=2880``` create a 1.44 MB file, the standard size of a floppy disk.
-
-2. Write the Boot Sector to the Disk Image
- - Now, we’ll add our bootloader (boot sector) to the beginning of this disk image:
-  - ```dd if=boot.bin of=boot.img bs=512 count=1 conv=notrunc``` 
-    - ```if=boot.bin``` specifies our assembled bootloader.
-    - ```of=boot.img``` is the disk image we created.
-    - ```conv=notrunc``` ensures the file is not truncated, preserving the entire 1.44 MB.
+ 1. Create an .bin disk image
+  - Run the following command to create a .bin disk image
+   - ```nasm -f bin boot.asm -o boot.bin```     
+    - ```-f bin boot.asm``` tells ``nasm`` that the image format should be .bi  
+    - ```-o boot.bin```specifies the output file  
     
-This disk image (boot.img) is now bootable and contains our bootloader in the first 512 bytes.
+This disk image (boot.bn) is now bootable and contains our bootloader in the first 512 bytes.
 
 ## 1.6 Testing the Bootable Disk Image
 
 We’ll use QEMU to test our bootable disk image in a virtual machine environment. This will let us see our "Hello, World!" message on boot without restarting our computer.
  - run the following command to launch QEMU:
-   - ```qemu-system-x86_64 -fda boot.img```
+   - ```qemu-system-x86_64 -fda boot.bin```
   
  - Expected Output::
  
